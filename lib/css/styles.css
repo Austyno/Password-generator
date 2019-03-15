@@ -1,0 +1,25 @@
+body{
+  background:grey
+}
+center{
+  margin-top:25%;
+}
+label{
+  color:white;
+  margin-left:-20%;
+}
+.btn{
+  margin-left:-38%;
+  margin-top:5px;
+  margin-bottom:40px;
+}
+
+#sentence{
+  height:35px;
+  width:250px;
+}
+.well{
+  height:30px;
+  line-height:5px;
+  width:60%;
+}

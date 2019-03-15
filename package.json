@@ -1,12 +1,11 @@
 {
-  "name": "electron-quick-start",
+  "name": "Easy-Pass",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "An app to generate passwords that can easily be remembered ",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
     "Electron",
     "quick",
@@ -14,9 +13,7 @@
     "tutorial",
     "demo"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^4.0.7"
+    "electron": "^3.0.9"
   }
 }

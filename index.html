@@ -2,18 +2,31 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <link href="lib/css/bootstrap.css" rel="stylesheet">
+    <link href="lib/css/font-awesome.css">
+    <link href="lib/css/styles.css" rel="stylesheet">
+    <script src="lib/js/jquery-2.1.4.min.js"></script>
+    <script src="lib/js/bootstrap-3.1.1.min.js"></script>
+    <title>Easy Pass</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    <div class="container">
+        <center>
+            <div>           
+                    <label for="sentence">Sentence for password</label><br>
+                    <input type="text" id="sentence" value="i love my wife"  placeholder="The longer the sentence the better"><br>         
+                    <button id="btn" class="btn btn-sm btn-success">Generate</button> 
 
+                    <div class="well" id="password"></div>
+            </div>
+        </center>
+
+    </div>
+   
     <script>
       // You can also require other files to run in this process
       require('./renderer.js')
+      
     </script>
   </body>
 </html>
