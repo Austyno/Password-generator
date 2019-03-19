@@ -1,4 +1,4 @@
-import { exists } from "fs";
+// import { exists } from "fs";
 
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
@@ -50,6 +50,6 @@ const btn = document.getElementById('btn'),
               }
            
               console.log(password)
-              passDisp.innerHTML = '**'+password.join(" ")+num+'**'
+              passDisp.innerHTML = '**'+password.join(" ")+Math.floor(Math.random()*(50-10+1)+10)+':**'
               
       })
