@@ -28,6 +28,7 @@ ipcRenderer.on('saved-pass',()=>{
   console.log('opening saved passwords....')
 })
 
+//save passwords to DB
 ipcRenderer.on('save',()=>{
   console.log(passDisp.innerHTML)
 })

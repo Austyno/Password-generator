@@ -71,6 +71,7 @@ const menuTemplate = [
     submenu:[
       {
         label:'Save',
+        accelerator: 'CmdOrCtrl+s',
         click(){
           save()
         }
@@ -87,6 +88,7 @@ const menuTemplate = [
     submenu: [
       {
         label : 'Saved PassWords',
+        accelerator: 'CmdOrCtrl+g',
         click(){
           mainWindow.webContents.send('saved-pass');
         }
