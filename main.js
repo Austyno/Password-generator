@@ -64,6 +64,7 @@ app.on('activate', function () {
   }
 })
 
+//app menu
 const menuTemplate = [
   {
     label : 'file',

@@ -2,22 +2,23 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 const {ipcRenderer} = require('electron');
+const helper = require('./lib/js/helper');
+
 
 const btn = document.getElementById('btn'),
       passDisp = document.getElementById('password'),
-      input = document.getElementById('sentence'),
-      num = Math.floor(Math.random()*(50-10+1)+10),
-      xters = "!@#$%&*?+";
+      num = Math.floor(Math.random()*(50-10+1)+10);
+      
 
       
 
       btn.addEventListener('click',(e)=>{
-        generate()               
+        helper.generate()               
       })
 
       document.addEventListener('keyup',(e)=>{
         if(e.which == 13){
-          generate()
+          helper.generate()
          }       
       })
 
@@ -30,55 +31,3 @@ ipcRenderer.on('saved-pass',()=>{
 ipcRenderer.on('save',()=>{
   console.log(passDisp.innerHTML)
 })
-
-
-      //generate password
-    function generate(){
-
-      var sentence = input.value;          
-
-        //convert sentence to array
-        const words = sentence.split(' ');
-
-
-             if(words.length == 1){
-              alert('Word is too short. Enter atleast two words')
-              return
-              }
-        const max = words.length - 1,
-              min = 1; 
-            
-              //convert a random word to uppercase
-              const str = words[Math.floor(Math.random()*(max-min+1)+min)].toUpperCase();
-
-              //locate 'str' in words and replace with str
-              words[words.indexOf(str.toLowerCase())] = str;
-          
-                    
-              let password =[];
-
-              for(var i=0; i<words.length;i++){
-                
-                 password.push( words[i]+shuffle(xters).substr(0,1)+':');
-                  
-              }
-
-              console.log(password)
-              passDisp.innerHTML = password.join(" ")+' '+Math.floor(Math.random()*(50-10+1)+10)+':'
-
-    }
-
-    //function to shuffle string and make it random to generate enthropy
-    function shuffle(string) {
-      var string = string.split(""),
-          n = string.length;
-  
-      for(var i = n - 1; i > 0; i--) {
-          var j = Math.floor(Math.random() * (i + 1));
-          var tmp = string[i];
-          string[i] = string[j];
-          string[j] = tmp;
-         
-      }
-      return string.join("");
-    }
