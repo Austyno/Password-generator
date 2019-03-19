@@ -1,10 +1,11 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow,Menu} = require('electron')
+const {app, BrowserWindow,Menu,ipcMain} = require('electron')
 // const menuTemplate = require('./lib/js/menu')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow;
+let loginWindow;
 
 function createWindow () {
   // Create the browser window.
@@ -27,9 +28,21 @@ function createWindow () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null
+    mainWindow = null,
+    loginWindow = null
   })
 }
+
+function createLoginWindow(){
+  loginWindow = new BrowserWindow({
+    height:250,
+    width:250,
+    title: 'Login'
+  });
+
+  loginWindow.loadFile('login.html');
+
+};
 
 function save(){
   console.log('saving...')
@@ -43,7 +56,6 @@ app.on('ready', ()=>{
   createWindow();
   const mainMenu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(mainMenu);
-
 
 })
 
@@ -62,6 +74,17 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+ipcMain.on('master-paswd',(e,pass)=>{
+  //send to renderer to check against DB details
+   mainWindow.webContents.send('master-paswd',pass);
+   loginWindow.close()
+  
+})
+
+ipcMain.on('login-error',()=>{
+  createLoginWindow();
 })
 
 //app menu
@@ -84,13 +107,26 @@ const menuTemplate = [
   },
 
   {
+    label: ' Dev Tools',
+    submenu: [
+      {
+        label: 'Toggle Devtools',
+        click(item,focusedwindow){
+          focusedwindow.toggleDevTools();
+        }
+      }
+  ]
+  },
+
+  {
     label: 'Passwords',
     submenu: [
       {
         label : 'Saved PassWords',
         accelerator: 'CmdOrCtrl+g',
         click(){
-          mainWindow.webContents.send('saved-pass');
+          createLoginWindow();
+          // mainWindow.webContents.send('saved-pass');
         }
       }
     ]

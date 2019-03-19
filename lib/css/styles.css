@@ -4,11 +4,11 @@ body{
 center{
   margin-top:25%;
 }
-label{
+#sen{
   color:white;
   margin-left:-20%;
 }
-.btn{
+#btn{
   margin-left:-38%;
   margin-top:5px;
   margin-bottom:40px;
