@@ -1,5 +1,7 @@
 // import { exists } from "fs";
 
+// import { exists } from "fs";
+
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
@@ -8,7 +10,7 @@ const btn = document.getElementById('btn'),
       passDisp = document.getElementById('password'),
       input = document.getElementById('sentence'),
       num = Math.floor(Math.random()*(50-10+1)+10),
-      xters = "!@#$%&*:?+;";
+      xters = "!@#$%&*?+";
 
       //function to shuffle string and make it random to generate enthropy
       function shuffle(string) {
@@ -25,20 +27,38 @@ const btn = document.getElementById('btn'),
         return string.join("");
     }
 
-      btn.addEventListener('click',()=>{
-        var sentence = input.value;
+      btn.addEventListener('click',(e)=>{
+        generate()               
+      })
+
+      document.addEventListener('keyup',(e)=>{
+        if(e.which == 13){
+
+          generate()
+         }       
+      })
+
+    function generate(){
+
+      var sentence = input.value;          
 
         //convert sentence to array
-        const words = sentence.split(' ');
-             
+        const words = sentence.split(' ');       
+             console.log(words.length)
+
+
+             if(words.length == 1){
+              alert('Word is too short. Enter atleast two words')
+              return
+              }
         const max = words.length - 1,
               min = 1; 
             
               //convert a random word to uppercase
-          const str = words[Math.floor(Math.random()*(max-min+1)+min)].toUpperCase();
+              const str = words[Math.floor(Math.random()*(max-min+1)+min)].toUpperCase();
 
-                //locate 'str' in words and replace with str
-                words[words.indexOf(str.toLowerCase())] = str;
+              //locate 'str' in words and replace with str
+              words[words.indexOf(str.toLowerCase())] = str;
           
                     
               let password =[];
@@ -48,8 +68,8 @@ const btn = document.getElementById('btn'),
                  password.push( words[i]+shuffle(xters).substr(0,1)+':');
                   
               }
-           
+
               console.log(password)
-              passDisp.innerHTML = '**'+password.join(" ")+Math.floor(Math.random()*(50-10+1)+10)+':**'
-              
-      })
+              passDisp.innerHTML = '**'+password.join(" ")+' '+Math.floor(Math.random()*(50-10+1)+10)+':**'
+
+    }
