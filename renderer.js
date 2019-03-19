@@ -1,10 +1,7 @@
-// import { exists } from "fs";
-
-// import { exists } from "fs";
-
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
+const {ipcRenderer} = require('electron');
 
 const btn = document.getElementById('btn'),
       passDisp = document.getElementById('password'),
@@ -12,20 +9,7 @@ const btn = document.getElementById('btn'),
       num = Math.floor(Math.random()*(50-10+1)+10),
       xters = "!@#$%&*?+";
 
-      //function to shuffle string and make it random to generate enthropy
-      function shuffle(string) {
-        var string = string.split(""),
-            n = string.length;
-    
-        for(var i = n - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var tmp = string[i];
-            string[i] = string[j];
-            string[j] = tmp;
-           
-        }
-        return string.join("");
-    }
+      
 
       btn.addEventListener('click',(e)=>{
         generate()               
@@ -33,18 +17,28 @@ const btn = document.getElementById('btn'),
 
       document.addEventListener('keyup',(e)=>{
         if(e.which == 13){
-
           generate()
          }       
       })
 
+
+//open saved passwords
+ipcRenderer.on('saved-pass',()=>{
+  console.log('opening saved passwords....')
+})
+
+ipcRenderer.on('save',()=>{
+  console.log(passDisp.innerHTML)
+})
+
+
+      //generate password
     function generate(){
 
       var sentence = input.value;          
 
         //convert sentence to array
-        const words = sentence.split(' ');       
-             console.log(words.length)
+        const words = sentence.split(' ');
 
 
              if(words.length == 1){
@@ -70,6 +64,21 @@ const btn = document.getElementById('btn'),
               }
 
               console.log(password)
-              passDisp.innerHTML = '**'+password.join(" ")+' '+Math.floor(Math.random()*(50-10+1)+10)+':**'
+              passDisp.innerHTML = password.join(" ")+' '+Math.floor(Math.random()*(50-10+1)+10)+':'
 
+    }
+
+    //function to shuffle string and make it random to generate enthropy
+    function shuffle(string) {
+      var string = string.split(""),
+          n = string.length;
+  
+      for(var i = n - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = string[i];
+          string[i] = string[j];
+          string[j] = tmp;
+         
+      }
+      return string.join("");
     }

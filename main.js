@@ -1,5 +1,6 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow,Menu} = require('electron')
+// const menuTemplate = require('./lib/js/menu')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -19,7 +20,7 @@ function createWindow () {
   mainWindow.loadFile('index.html')
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+   mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -30,10 +31,21 @@ function createWindow () {
   })
 }
 
+function save(){
+  console.log('saving...')
+  mainWindow.webContents.send('save');
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', ()=>{
+  createWindow();
+  const mainMenu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(mainMenu);
+
+
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -51,6 +63,36 @@ app.on('activate', function () {
     createWindow()
   }
 })
+
+const menuTemplate = [
+  {
+    label : 'file',
+    submenu:[
+      {
+        label:'Save',
+        click(){
+          save()
+        }
+      },
+      
+      {
+        role: 'reload'
+      }
+    ]
+  },
+
+  {
+    label: 'Passwords',
+    submenu: [
+      {
+        label : 'Saved PassWords',
+        click(){
+          mainWindow.webContents.send('saved-pass');
+        }
+      }
+    ]
+  }
+];
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
