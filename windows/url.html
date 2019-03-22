@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link href="../lib/css/bootstrap.css" rel="stylesheet">
+    <link href="../lib/css/font-awesome.css">
+    <link href="../lib/css/styles.css" rel="stylesheet">
+    <script src="../lib/js/jquery-2.1.4.min.js"></script>
+    <script src="../lib/js/bootstrap-3.1.1.min.js"></script>
+    <title>URL</title>
+  </head>
+  <body>
+
+    <div class="container">
+      <center>
+          <form>
+              <div class="form-group">
+                  <label for="pswd" style="color:white">Url</label>
+                  <input type="text" class="form-control" value="www.google.com" id="url" placeholder="Enter url for pswd">
+                </div>
+                <button id="urlbtn" class="btn btn-default">Save Url</button>
+            </form>
+      </center>
+    </div>
+
+<script>
+    const {ipcRenderer} = require('electron'),
+         url = document.getElementById('url'),
+         urlbtn = document.getElementById('urlbtn');
+
+         urlbtn.addEventListener('click',()=>{
+           const pswdUrl = url.value;
+
+           //send to main
+           ipcRenderer.send('url',pswdUrl);
+         })
+
+</script>
+
+</body>
+</html>

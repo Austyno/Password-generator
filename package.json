@@ -3,17 +3,20 @@
   "version": "1.0.0",
   "description": "An app to generate passwords that can easily be remembered ",
   "main": "main.js",
-  "scripts": {
-    "start": "electron ."
-  },
   "keywords": [
     "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "password"
   ],
   "devDependencies": {
-    "electron": "^3.0.9"
+    "electron": "^4.0",
+    "electron-builder": "^10.8.1"
+  },
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "build"
+  },
+  "dependencies": {
+    "nedb": "^1.8.0"
   }
 }
