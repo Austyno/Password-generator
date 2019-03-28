@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link href="../lib/css/bootstrap.css" rel="stylesheet">
+    <link href="../lib/css/font-awesome.css">
+    <link href="../lib/css/styles.css" rel="stylesheet">
+    <script src="../lib/js/jquery-2.1.4.min.js"></script>
+    <script src="../lib/js/bootstrap-3.1.1.min.js"></script>
+    <title>Master Password</title>
+  </head>
+  <body>
+
+    <div class="container">
+      <center>
+              <div class="form-group">
+                  <label for="pswd" style="color:white">Master Password</label>
+                  <input type="password" class="form-control" id="pswd" placeholder="Register Master Password">
+                </div>
+                <button id="save" class="btn btn-default">Save</button>
+      </center>
+
+
+      <span style="color:white;font-size:12px ">Register Master password to secure all saved passwords. Use a password you can remenber, this cannot be recovered if forgotten</span>
+    </div>
+
+<script>
+    // You can also require other files to run in this process
+    require('../lib/js/master.js')      
+</script> 
+
+</body>
+</html>

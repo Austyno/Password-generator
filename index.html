@@ -7,6 +7,7 @@
     <link href="lib/css/styles.css" rel="stylesheet">
     <script src="lib/js/jquery-2.1.4.min.js"></script>
     <script src="lib/js/bootstrap-3.1.1.min.js"></script>
+    <script src="lib/js/menu.js" charset="utf-8"></script>
     <title>Easy Pass</title>
   </head>
   <body>
@@ -14,19 +15,33 @@
         <center>
             <div>           
                 <label for="sentence" id="sen">Sentence for password</label><br>
-                <input type="text" class="password" id="sentence" value="i love my wife"  placeholder="The longer the sentence the better" autofocus><br>         
+                <input type="text" class="password" id="sentence" value=""  placeholder="The longer the sentence the better" autofocus><br>         
                 <button id="btn" class="btn btn-sm btn-success">Generate</button> <br>
 
                 <input type="text" id="password" class="password" disabled>
             </div>
         </center>
 
-        <div class="row" id="savedPass"></div>
+        
+    </div>
+    <div class="container" style="margin-top:30px">
+      <div class="row">
+        <table class="table table-bordered table-striped" id="savedPass"></table>
+      </div>
     </div>
    
     <script>
       // You can also require other files to run in this process
       require('./renderer.js')
+
+//       let menu1 = new Menu();
+// menu1.append(new MenuItem({ label: 'MenuItem1', click () { alert('item 1 clicked'); } }));
+// menu1.append(new MenuItem({ label: 'MenuItem2', type: 'checkbox', checked: true }));
+// menu1.append(new MenuItem({ label: 'Disk', submenu: submenu}));
+// window.addEventListener('contextmenu', function (e) {
+//   e.preventDefault();
+//   menu1.popup(remote.getCurrentWindow());
+// }, false);
       
     </script>
   </body>

@@ -1,6 +1,7 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow,Menu,ipcMain} = require('electron')
-
+const {app, BrowserWindow,Menu,ipcMain,shell,dialog} = require('electron');
+const Datastore = require('nedb');
+const db = new Datastore({ filename: 'lib/db/password.db', autoload: true });
 // const menuTemplate = require('./lib/js/menu')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -8,18 +9,7 @@ const {app, BrowserWindow,Menu,ipcMain} = require('electron')
 let mainWindow;
 let loginWindow;
 let urlWindow;
-
-
-//insert into db table pswd
-// db.tables.pswd.data = [   // You can mix SQL and JavaScript
-//   {one:3,two:4},
-//   {one:5,two:6},
-// ];
-
-    //read data from db
-// var res = db.exec("SELECT * FROM test ORDER BY two DESC");
-
-
+let masterWindow;
 
 function createWindow () {
   // Create the browser window.
@@ -42,9 +32,10 @@ function createWindow () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null,
-    loginWindow = null,
-    urlWindow = null
+    mainWindow = null;
+    loginWindow = null;
+    urlWindow = null;
+    masterWindow = null;
   })
 }
 
@@ -65,6 +56,16 @@ function createLoginWindow(){
   });
   loginWindow.loadFile('windows/login.html');
 };
+
+function createNewMasterWindow(){
+  masterWindow = new BrowserWindow({
+    height:250,
+    width:250,
+    title: ' Save Master Password'
+  });
+  masterWindow.loadFile('windows/master.html');
+
+}
 
 function save(){
   console.log('saving...');
@@ -98,23 +99,46 @@ app.on('activate', function () {
     createWindow()
   }
 })
+ipcMain.on('saveMasterPaswd',(e,masterPass)=>{
 
-ipcMain.on('master-paswd',(e,pass)=>{
-  //send to renderer to check against DB details
-   mainWindow.webContents.send('master-paswd',pass);
-   loginWindow.close()
-  
-})
+
+  var doc = {
+    name: 'master',
+    masterpass : masterPass
+  };
+
+  db.insert(doc,(error,newdoc)=>{
+
+    if(error){
+      reg = false;
+    }else{
+      reg = true;
+    }
+  })
+ 
+
+  mainWindow.webContents.send('master-saved',reg);
+  masterWindow.close();
+
+});
 
 //receive entered url from url window and send to mainWindow 
 ipcMain.on('url',(e,pswdUrl)=>{
-mainWindow.webContents.send('url',pswdUrl);
-urlWindow.close();
+  mainWindow.webContents.send('url',pswdUrl);
+  urlWindow.close();
+});
+
+ipcMain.on('login',(e,loginPass)=>{
+  mainWindow.webContents.send('login',loginPass);
+  loginWindow.close();
+
 })
 
 ipcMain.on('login-error',()=>{
+  shell.beep()
   createLoginWindow();
-})
+  
+});
 
 //app menu
 const menuTemplate = [
@@ -134,6 +158,7 @@ const menuTemplate = [
       }
     ]
   },
+  
   {
     label: ' Dev Tools',
     submenu: [
@@ -153,8 +178,16 @@ const menuTemplate = [
         label : 'Saved PassWords',
         accelerator: 'CmdOrCtrl+g',
         click(){
-          // createLoginWindow();
-          mainWindow.webContents.send('master-paswd');
+
+          db.find({masterpass:{$exists: true}},(error,doc)=>{
+
+            if(doc.length == 0){
+              createNewMasterWindow();
+            }else{
+              createLoginWindow();
+            }
+          })        
+          
         }
       }
     ]
