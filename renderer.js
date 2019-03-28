@@ -73,19 +73,21 @@ ipcRenderer.on('login',(e,loginPass)=>{
   })
 });
 
+
+
 function showPass(){
-  db.find({},(err,doc)=>{
-    // const tr = document.createElement('tr');
-          let saved;
-          let count =1;
-          doc.forEach(pass => {    
-            
-             saved += `<tr style="background:white"><td>${count++}</td><td>${pass.url}</td><td>${pass.password}</td></tr>`     
-            console.log(pass.password);
-          });
-          savedPass.innerHTML =saved ;
-          // console.log(doc);
-      })
+  db.find({ $not: { name: 'master' } }, function (err, doc) {
+
+    let saved;
+    let count =1;
+    doc.forEach(pass => {     
+        saved += `<tr style="background:white"><td>${count++}</td><td>${pass.url}</td><td>${pass.password}</td></tr>` 
+    });
+    savedPass.innerHTML = saved ;
+    // console.log(doc);
+  
+  });
+  
 }
 
 function deleteAll(){

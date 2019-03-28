@@ -109,15 +109,15 @@ ipcMain.on('saveMasterPaswd',(e,masterPass)=>{
 
   db.insert(doc,(error,newdoc)=>{
 
-    if(error){
-      reg = false;
-    }else{
-      reg = true;
-    }
+    // if(error){
+    //   reg = false;
+    // }else{
+    //   reg = true;
+    // }
   })
  
 
-  mainWindow.webContents.send('master-saved',reg);
+  mainWindow.webContents.send('master-saved');
   masterWindow.close();
 
 });
