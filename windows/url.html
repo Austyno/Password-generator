@@ -15,10 +15,10 @@
       <center>
           <form>
               <div class="form-group">
-                  <label for="pswd" style="color:white">Url</label>
-                  <input type="text" class="form-control" value="www.google.com" id="url" placeholder="Enter url for pswd">
+                  <label for="pswd" style="color:white">Site Url</label>
+                  <input type="text" class="form-control" id="url" placeholder="Enter site url">
                 </div>
-                <button id="urlbtn" class="btn btn-default">Save Url</button>
+                <button id="urlbtn" class="btn btn-default">Save</button>
             </form>
       </center>
     </div>
@@ -29,6 +29,8 @@
          urlbtn = document.getElementById('urlbtn');
 
          urlbtn.addEventListener('click',()=>{
+           //validate entered value using regx first
+
            const pswdUrl = url.value;
 
            //send to main

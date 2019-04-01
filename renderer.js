@@ -33,7 +33,7 @@ ipcRenderer.on('url',(e,pswdUrl)=>{
    }
  db.insert(savePass,(error,newsavePass)=>{
   //  console.log(newsavePass._id)
-   alert('pass word saved successfuly');
+   alert('password saved successfuly');
  })
 })
 

@@ -9,14 +9,42 @@
   ],
   "devDependencies": {
     "electron": "^4.0",
-    "electron-builder": "^10.8.1"
+    "electron-builder": "^20.38.2"
   },
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "release": "build"
+    "pack": "build --dir",
+    "dist": "build"
   },
   "dependencies": {
     "nedb": "^1.8.0"
+  },
+  "build": {
+    "appId": "com.electron.${name}",
+    "icon": "build/pass.icns",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "squirrel",
+      "icon": "build/pass.ico"
+    }
   }
 }
