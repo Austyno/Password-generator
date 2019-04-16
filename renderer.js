@@ -40,7 +40,6 @@ ipcRenderer.on('url',(e,pswdUrl)=>{
 
 ipcRenderer.on('master-saved',(e)=>{
   showPass();
-  
 })
 
 ipcRenderer.on('login',(e,loginPass)=>{
@@ -61,19 +60,15 @@ ipcRenderer.on('login',(e,loginPass)=>{
 function showPass(){
   db.find({ $not: { name: 'master' } }, function (err, doc) {
 
-    let saved;
+    savedPass.innerHTML = '';
     let count =1;
     doc.forEach(pass => {     
-        saved += `<tr style="background:white"><td>${count++}</td><td>${pass.url}</td><td>${pass.password}</td></tr>` 
+      savedPass.innerHTML += `<tr style="background:white"><td>${count++}</td><td>${pass.url}</td><td>${pass.password}</td></tr>` 
     });
-    savedPass.innerHTML = saved ;
-    // console.log(doc);
-  
-  });
-  
-}
+  }); 
+};
 
-function deleteAll(){
+ deleteAll = () => {
   db.remove({}, { multi: true }, function (err, numRemoved) {
     console.log(numRemoved);
   });
